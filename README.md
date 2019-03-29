@@ -94,6 +94,21 @@ This will start the process of "ejecting" from Create React Native App's build s
 
 **Warning:** Running eject is a permanent action (aside from whatever version control system you use). An ejected app will require you to have an [Xcode and/or Android Studio environment](https://facebook.github.io/react-native/docs/getting-started.html) set up.
 
+
+#### `problems I faced and how i got over: `
+
+If you see an error like this:
+```
+* Where:
+Build file ‘{path to project}/react-native-music-control-demo/node_modules/react-native-sound/android/build.gradle' line: 23
+
+* What went wrong:
+A problem occurred evaluating project ':react-native-sound'.
+> Could not find method compileOnly() for arguments [com.facebook.react:react-native:+] on object of type org.gradle.api.internal.artifacts.dsl.dependencies.DefaultDependencyHandler.
+```
+
+Try replacing `compileOnly` on line 23 to `compile` in `'{path to project}/react-native-music-control-demo/node_modules/react-native-sound/android/build.gradle' line: 23`
+
 ## Customizing App Display Name and Icon
 
 You can edit `app.json` to include [configuration keys](https://docs.expo.io/versions/latest/guides/configuration.html) under the `expo` key.
