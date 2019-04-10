@@ -1,31 +1,75 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+import React from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import MusicControl from 'react-native-music-control';
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
 
-export default class App extends Component {
+export default class App extends React.Component {
+  constructor(props){
+    console.log("init")
+    super(props)
+    this.state = {
+      playing: false
+    }
+  }
+
+  toggle = () => {
+    this.state.playing ? this.pause() : this.play();
+  }
+
+  play = () => {
+    this.setState({playing: true})
+    MusicControl.updatePlayback({
+      state: MusicControl.STATE_PLAYING,
+      elapsedTime: 0
+    })
+  }
+  
+  pause = () => {
+    this.setState({playing: false})
+    MusicControl.updatePlayback({
+      state: MusicControl.STATE_PAUSED,
+      elapsedTime: 0
+    })
+  }
+
+  componentDidMount(){
+    MusicControl.enableBackgroundMode(true);
+
+    MusicControl.enableControl('play', true)
+    MusicControl.enableControl('pause', true)
+
+    MusicControl.on('play', ()=> {
+      console.log("playing...")
+      this.play();
+    });
+
+    MusicControl.on('pause', ()=> {
+      console.log("pausing...");
+      this.pause();
+    });
+
+    MusicControl.setNowPlaying({
+      title: 'title',
+      artwork: 'https://i.imgur.com/e1cpwdo.png',
+      artist: 'artist',
+      album: 'album',
+      genre: 'genre',
+      duration: 100,
+      description: 'description',
+      date: '1983-01-02T00:00:00Z',
+      rating: 84
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <Button
+          onPress={this.toggle}
+          title={this.state.playing ? "PAUSE SONG" : "PLAY SONG"}
+          color="#841584"
+          accessibilityLabel="Learn more about this purple button"
+        />
       </View>
     );
   }
