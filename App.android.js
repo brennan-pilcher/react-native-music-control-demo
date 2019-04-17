@@ -37,6 +37,7 @@ export default class App extends React.Component {
 
     MusicControl.enableControl('play', true)
     MusicControl.enableControl('pause', true)
+    MusicControl.enableControl('closeNotification', true, { when: 'always' });
 
     MusicControl.on('play', ()=> {
       console.log("playing...")
