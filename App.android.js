@@ -49,6 +49,10 @@ export default class App extends React.Component {
       this.pause();
     });
 
+    MusicControl.on('closeNotification', () => {
+      console.log("attempting to dismiss from " + (this.state.playing ? "playing" : "paused") + " state")
+    })
+
     MusicControl.setNowPlaying({
       title: 'title',
       artwork: 'https://i.imgur.com/e1cpwdo.png',
